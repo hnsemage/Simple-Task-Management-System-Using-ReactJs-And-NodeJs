@@ -9,16 +9,15 @@ const taskSchema = new Schema({
     startDate: { type: String },
     endDate: { type: String },
     taskStatus: { type: String, required: true, default: 'pending' }
-}, { _id: false, versionKey: false });
+}, { versionKey: false });
 
-// Pre-save middleware to generate taskId values
 taskSchema.pre('save', async function(next) {
     if (!this.isNew) { // Check if the document is new
         return next();
     }
     try {
         // Find the highest taskId in the collection
-        const highestTask = await Task.findOne({}, 'taskId').sort({ taskId: -1 });
+        const highestTask = await this.constructor.findOne({}, 'taskId').sort({ taskId: -1 });
         const highestTaskId = highestTask ? highestTask.taskId : 0;
         // Increment the highest taskId by 1 for the new task
         this.taskId = highestTaskId + 1;

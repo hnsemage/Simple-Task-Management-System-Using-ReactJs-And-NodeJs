@@ -3,7 +3,7 @@ const router = express.Router();
 const taskController = require('../controller/TaskController');
 
 // Create a new task
-router.post('/api/CreateTasks', taskController.createTask);
+router.post('/CreateTasks', taskController.createTask);
 
 // Retrieve all tasks
 router.get('/AllTasks', taskController.getAllTasks);

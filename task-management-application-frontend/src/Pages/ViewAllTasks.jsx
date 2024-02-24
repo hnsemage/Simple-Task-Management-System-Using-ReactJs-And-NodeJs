@@ -37,16 +37,16 @@ function ViewAllTasks() {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/AllTasks');
+      const response = await axios.get('http://localhost:8080/api/AllTasks');
       setTaskData(response.data);
     } catch (error) {
       console.log('Error when fetching tasks: ', error);
     }
   };
 
-  const handleUpdate = async (taskId, newStatus) => {
+  const handleUpdateStatus = async (taskId, newStatus) => {
     try {
-      await axios.put(`http://localhost:3000/api/updateStatus/${taskId}`, { newStatus });
+      await axios.put(`http://localhost:8080/api/UpdateTaskStatus/${taskId}`, { newStatus });
       // Update the local state to reflect the changes
       const updatedTasks = taskData.map(task => {
         if (task.taskId === taskId) {
@@ -61,9 +61,15 @@ function ViewAllTasks() {
     }
   };
 
+  const handleUpdate = (taskId) => {
+    const selectedTask = taskData.find((task) => task.taskId === taskId)
+    navigate(`/update/${taskId}`, { state: { from: "ViewAllTasks", task: selectedTask } });
+    console.log(`Update button clicked for Task ID: ${taskId}`);
+  };
+
   const handleDelete = async (taskId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/DeleteTask/${taskId}`);
+      await axios.delete(`http://localhost:8080/api/DeleteTask/${taskId}`);
       // Update the local state to reflect the changes
       setTaskData(prevTaskData => prevTaskData.filter(record => record.taskId !== taskId));
       console.log(`Delete button clicked for Task ID: ${taskId}`);
@@ -177,34 +183,49 @@ function ViewAllTasks() {
                 <TableCell style={{ border: '1px solid white' }} align="center">{task.endDate}</TableCell>
                 <TableCell style={{ border: '1px solid white' }} align="center">
                   <FormControl>
-                    <Select
-                      value={task.taskStatus}
-                      onChange={(e) => handleUpdate(task.taskId, e.target.value)}
-                      sx={{
-                        backgroundColor: "#BADFE7",
-                        color: "black",
-                        fontWeight: "bold",
-                        fontFamily: "Inika",
-                        fontSize: 15,
-                      }}>
-                      <MenuItem value="Pending">Pending</MenuItem>
-                      <MenuItem value="In Progress">In Progress</MenuItem>
-                      <MenuItem value="Completed">Completed</MenuItem>
-                    </Select>
+                  <Select
+                  value={task.taskStatus}
+                  onChange={(e) => handleUpdateStatus(task.taskId, e.target.value)}
+                  sx={{
+                    backgroundColor: "#BADFE7",
+                    color: "black",
+                    fontWeight: "bold",
+                    fontFamily: "Inika",
+                    fontSize: 15,
+                  }}
+                  >
+                    <MenuItem value="Pending">Pending</MenuItem>
+                    <MenuItem value="Completed">Completed</MenuItem>
+                  </Select>
+
                   </FormControl>
                 </TableCell>
                 <TableCell style={{ border: '1px solid white' }} align="center">
-                  <Button variant="contained" onClick={() => handleDelete(task.taskId)}
-                    sx={{
+                <Button 
+                variant="contained" 
+                onClick={() => handleUpdate(task.taskId, task.taskStatus)} // Pass taskId and taskStatus
+                style={{ margin: '8px' }}
+                sx={{
+                  backgroundColor: "#314247",
+                  color: "#BADFE7",
+                  fontFamily: "Inika",
+                  fontSize: 15,
+                }}
+                >
+                  Update
+                </Button>
+                <Button variant="contained" 
+                onClick={() => handleDelete(task.taskId)}
+                sx={{
                       backgroundColor: "#314247",
                       color: "#BADFE7",
                       fontFamily: "Inika",
                       fontSize: 15,
                     }}>
                     Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
+                </Button>
+              </TableCell>
+            </TableRow>
             ))}
           </TableBody>
         </Table>
@@ -213,7 +234,7 @@ function ViewAllTasks() {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => navigate(`/adminPage/${username}`)}
+          onClick={() => navigate(`/`)}
           sx={{
             m: 3,
             width: "20ch",

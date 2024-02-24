@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors'); // Import the cors middleware
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const taskRoutes = require('./routes/TaskRoutes');
@@ -6,8 +7,11 @@ const taskRoutes = require('./routes/TaskRoutes');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// Enable CORS for all routes
+app.use(cors());
+
 app.use(bodyParser.json());
-app.use('/api', taskRoutes); // Mounting the task routes
+app.use('/api', taskRoutes);
 
 mongoose.connect('mongodb://localhost:27017/TaskManager', {
    useNewUrlParser: true,
