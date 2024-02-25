@@ -1,9 +1,10 @@
-import React, { useState,useEffect } from 'react';
-import { Container,Button, TextField, FormControl, Box, Typography, MenuItem,styled } from "@mui/material";
-import axios from 'axios';
-import { useNavigate,useParams, useLocation } from "react-router-dom";
+import React, { useState,useEffect } from 'react'; // Import React and necessary hooks
+import { Container,Button, TextField, FormControl, Box, Typography, MenuItem,styled } from "@mui/material"; // Import MUI components
+import axios from 'axios'; // Import Axios for HTTP requests
+import { useNavigate,useParams } from "react-router-dom"; // Import useNavigate and useParams hooks for navigation and URL parameters
 
 
+// Styled component to customize MenuItem
 const BlackMenuItem = styled(MenuItem)({
   backgroundColor: '#314247', // Set the background color to black
   '&:hover': {
@@ -18,10 +19,10 @@ const BlackMenuItem = styled(MenuItem)({
 
 function UpdateTask(){
 
-    const navigate = useNavigate();
-    const{taskId} = useParams();
-    const location = useLocation();
-    
+    const navigate = useNavigate(); // Define navigation function
+    const{taskId} = useParams(); // Get task ID from URL parameters
+
+    // Define state variables for task details and form validation
     const [task,setTask] = useState({
         taskName:"",
         description:"",
@@ -31,6 +32,7 @@ function UpdateTask(){
         taskStatus:"",
     });
 
+    // Fetch task details from the API based on task ID
     useEffect(() => {
         const fetchTaskDetails = async () => {
             try {
@@ -46,7 +48,7 @@ function UpdateTask(){
     }, [taskId]);
     
       
-  
+    // State variables and error messages for form validation
     const [taskNameErr, setTaskNameErr] = useState(false);
     const [descriptionErr, setDescriptionErr] = useState(false);
     const [usernameErr, setUsernameErr] = useState(false);
@@ -65,14 +67,16 @@ function UpdateTask(){
 
     const [taskStatusTypes, setTaskStatusTypes] = useState(['Pending','Completed']);
 
+    // Handler for the first dropdown change
     const handleFirstDropDownChange=(event) =>{
       const selectedType = event.target.value;
       setTask({...task, taskStatus:selectedType});
     }
 
+    // Form submission handler
     const handleSubmit = async (e) => {
     
-      //e.preventDefault();
+      e.preventDefault();
     
         setTaskNameErr(false);
         setDescriptionErr(false);
@@ -123,6 +127,7 @@ function UpdateTask(){
             setMessagetTaskStatusErr("");
         }
         
+        // If form is valid, submit data to the server
         if (task.taskName === "" || task.description === ""|| task.username === "" || task.startDate === "" || task.endDate === "" || task.taskStatus === "" ) {
           setRecheckFormMessage('Recheck The Form');
         } else {
@@ -140,6 +145,7 @@ function UpdateTask(){
 
     return(
         <Container>
+            {/* Form elements for updating task */}
             <Box style={{ textAlign: 'center', }} m={4}>
                 <Typography variant="h5" gutterBottom style={{ fontFamily: "Inika", fontSize: 58, fontWeight: "bold", color: "#f7f7f7" }}>
                     Update Task
@@ -283,21 +289,21 @@ function UpdateTask(){
                     <Button
                     type="submit"
                     variant="contained"
-                    onClick={navigate('/')}
+                    onClick={() => navigate('/viewalltasks')}
                     color="primary"
                     sx={{
                         m: 3,
                         backgroundColor: "#647973",
                         "&:hover": {
-                        backgroundColor: "#314247", 
-                        },
-                        color: "black",
-                        fontWeight: "bold",
-                        fontFamily: "Inika",
-                        fontSize: 20,
-                        }}>
-                            Back
+                            backgroundColor: "#314247", },
+                            color: "black",
+                            fontWeight: "bold",
+                            fontFamily: "Inika",
+                            fontSize: 20,
+                            }}>
+                                Back
                     </Button>
+                    {/* Error message for form validation */}
                     <Typography
                     variant="body2"
                     sx={{
@@ -308,11 +314,10 @@ function UpdateTask(){
                     }}>
                         {recheckFormMessage}
                     </Typography>
-  
                 </form>
             </Box>
         
         </Container>
     );
 }
-export default UpdateTask;
+export default UpdateTask; // Export the UpdateTask component

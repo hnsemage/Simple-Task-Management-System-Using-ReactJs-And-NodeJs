@@ -1,6 +1,8 @@
+// Importing necessary modules
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Defining the schema for the task collection
 const taskSchema = new Schema({
     taskId: { type: Number, unique: true },
     taskName: { type: String, required: true },
@@ -9,8 +11,9 @@ const taskSchema = new Schema({
     startDate: { type: String },
     endDate: { type: String },
     taskStatus: { type: String, required: true, default: 'pending' }
-}, { versionKey: false });
+}, { versionKey: false });// Disabling versioning for the schema
 
+// Pre-save hook to generate taskId before saving a new task
 taskSchema.pre('save', async function(next) {
     if (!this.isNew) { // Check if the document is new
         return next();
@@ -27,6 +30,8 @@ taskSchema.pre('save', async function(next) {
     }
 });
 
+// Creating the Task model based on the schema
 const Task = mongoose.model('Task', taskSchema);
 
+// Exporting the Task model
 module.exports = Task;

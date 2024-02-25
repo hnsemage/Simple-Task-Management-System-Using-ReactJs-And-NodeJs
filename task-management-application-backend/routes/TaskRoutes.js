@@ -1,3 +1,4 @@
+// Importing necessary modules
 const express = require('express');
 const router = express.Router();
 const taskController = require('../controller/TaskController');
@@ -13,9 +14,6 @@ router.get('/TaskById/:taskId', taskController.getTaskById);
 
 // Update a task by ID
 router.put('/UpdateTask/:taskId', taskController.updateTask);
-
-// Update only the task status of a task by ID
-router.patch('/UpdateTaskStatus/:taskId/status', taskController.updateTaskStatus);
 
 // Delete a task by ID
 router.delete('/DeleteTask/:taskId', taskController.deleteTask);

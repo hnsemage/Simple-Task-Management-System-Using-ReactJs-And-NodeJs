@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Container,Button, TextField, FormControl, Box, Typography, MenuItem,styled } from "@mui/material";
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react'; // Import React and useState hook
+import { Container,Button, TextField, FormControl, Box, Typography, MenuItem,styled } from "@mui/material"; // Import MUI components
+import axios from 'axios'; // Import Axios for HTTP requests
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook for navigation
 
 
+// Styled component to customize MenuItem
 const BlackMenuItem = styled(MenuItem)({
   backgroundColor: '#314247', // Set the background color to black
   '&:hover': {
@@ -18,8 +19,10 @@ const BlackMenuItem = styled(MenuItem)({
 
 function TaskCreate(){
 
+  // Define navigation function
     const navigate = useNavigate();
 
+    // State variables for task creation form fields and validation
     const [taskName, setTaskName] = useState("");
     const [description, setDescription] = useState("");
     const [username, setUsername] = useState("");
@@ -34,6 +37,7 @@ function TaskCreate(){
     const [endDateErr, setEndDateErr] = useState(false);
     const [taskStatusErr, setTaskStatusErr] = useState(false);
 
+    // State variables for error messages
     const [messageTaskNameErr, setMessageTaskNameErr] = useState("");
     const [messageDescriptionErr, setMessageDescriptionErr] = useState("");
     const [messageUsernameErr, setMessageUsernameErr] = useState("");
@@ -41,14 +45,18 @@ function TaskCreate(){
     const [messageEndDateErr, setMessageEndDateErr] = useState("");
     const [messagetTaskStatusErr, setMessagetTaskStatusErr] = useState("");
 
+    // State variable for form submission message
     const [recheckFormMessage, setRecheckFormMessage] = useState('');
 
+    // State variable for task status types
     const [taskStatusTypes, setTaskStatusTypes] = useState(['Pending','Completed']);
 
+    // Handler for dropdown change
     const handleFirstDropDownChange=(event) =>{
       const selectedType = event.target.value;
       setTaskStatus(selectedType);}
 
+    // Form submission handler
     const handleSubmit = async (e) => {
     
         e.preventDefault();
@@ -139,6 +147,7 @@ function TaskCreate(){
 
     return(
         <Container>
+          {/* Form elements for creating a new task */}
             <Box textAlign="center" m={4}>
                 <Typography variant="h5" gutterBottom style={{ fontFamily: "Inika", fontSize: 58, fontWeight: "bold", color: "#f7f7f7" }}>
                     Create New Task
@@ -296,6 +305,7 @@ function TaskCreate(){
                     }}>
                         View Tasks
                     </Button>
+                    {/* Error message for form validation */}
                     <Typography
                     variant="body2"
                     sx={{
@@ -313,4 +323,4 @@ function TaskCreate(){
         </Container>
     );
 }
-export default TaskCreate;
+export default TaskCreate; // Export the TaskCreate component
