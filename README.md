@@ -2,6 +2,18 @@
 
 This repository includes the frontend and backend code base that use to develop a simple task management system. The application uses MERN stack to develop the application, which MongoDB is used as the database of the system, React Js framework as the frontend development technology and Node Js and Express Js frameworks as the backend development technologies. The application is developed following MVC architecture. 
 
+The home page of the application is the new task creation form. 
+
+The functionalities of the application include:
+- Creating a new task.
+- View all the existing tasks.
+- Update task status.
+- Update all the task related information.
+- Delete a task.
+- Sorting tasks according to task status, username, start date, end date and in default is sorted according to taskId.
+- Filtering tasks according to taskId, username and task status.
+
+
 1. Backend
 
     - The backend of the application is developed in Node Js and Express Js frameworks.
