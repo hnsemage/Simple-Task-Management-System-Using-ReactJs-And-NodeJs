@@ -197,7 +197,7 @@ function ViewAllTasks(){
                                 <TableCell style={{ border: '1px solid white'}} align="center">{task.endDate}</TableCell>
                                 <TableCell style={{ border: '1px solid white' }} align="center">
                                   {/* Dropdown menu for selecting task status */}
-                                  <FormControl fullWidth variant="standard">
+                                  <FormControl variant="outlined">
                                     <Select
                                     value={task.taskStatus}
                                     onChange={(e) => handleStatusChange(task.taskId, e.target.value)}
@@ -207,7 +207,7 @@ function ViewAllTasks(){
                                       fontWeight: "bold",
                                       fontFamily: "Inika",
                                       fontSize: 15,
-                                      borderRadius: '10px'
+                                      borderRadius:'10px'
                                       }}>
                                         <MenuItem value="Pending">Pending</MenuItem>
                                         <MenuItem value="Completed">Completed</MenuItem>
