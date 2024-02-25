@@ -19,6 +19,8 @@ This repository includes the frontend and backend code base that use to develop 
      - The dependencies that I have used are mentioned below:
         1. Axios
         2. React Router Dom
+     - Security measures and error handling implemented:
+        1. I have used try/catch method for error handling
 
 
 
@@ -44,7 +46,7 @@ This repository includes the frontend and backend code base that use to develop 
      - Frontend
          - npm start
       
-# Steps to install dependencies seperately 
+# Steps to install dependencies separately 
 
 1. Backend
    - Express.js
